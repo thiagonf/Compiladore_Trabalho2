@@ -5,7 +5,7 @@ dictionary = {
     '-': '\ttape[index]--;\n',
     '>': '\t++index;\n',
     '<': '\t--index;\n',
-    '.': '\tprintf("%c", tape[index]);\n',
+    '.': '\tprintf("%c\\n", tape[index]);\n',
     ',': '\ttape[index] = getchar();\ngetchar();\n',
     '[': '\twhile(tape[index]) {\n',
     ']': '\t}\n'
@@ -20,7 +20,7 @@ def parser(source, o):
                "#include <stdlib.h>\n"
                "int main(){"
                "\n\t char tape [5000];\n"
-               "\n\tint index = 0;;\n"
+               "\n\tint index = 0;\n"
                )
     data = source.read()
     for char in data:

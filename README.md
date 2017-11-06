@@ -1,4 +1,4 @@
-# Compiladore_Trabalho2
+# Compiladores Trabalho 2
 
 Este trabalho é um tradutor de brainfuck para lingagem C para a disciplina de Fundamento de Compliadores 2017/2.
 
