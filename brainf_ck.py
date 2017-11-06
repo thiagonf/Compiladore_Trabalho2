@@ -1,34 +1,35 @@
 import click
 
+dictionary = {
+    '+': '\ttape[index]++;\n',
+    '-': '\ttape[index]--;\n',
+    '>': '\t++index;\n',
+    '<': '\t--index;\n',
+    '.': '\tprintf("%c", tape[index]);\n',
+    ',': '\ttape[index] = getchar();\ngetchar();\n',
+    '[': '\twhile(tape[index]) {\n',
+    ']': '\t}\n'
+}
+
 
 @click.command()
-@click.argument('code_file', type=click.File('r'))
+@click.argument('source', type=click.File('r'))
 @click.option('-o', nargs=1, type=click.File('w'))
-def parser(code_file, o):
-    progam_c = """
-#include<stdio.h>
-#include <stdlib.h>
+def parser(source, o):
+    program = ("#include <stdio.h>\n"
+               "#include <stdlib.h>\n"
+               "int main(){"
+               "\n\t char tape [5000];\n"
+               "\n\tint index = 0;;\n"
+               )
+    data = source.read()
+    for char in data:
+        if char in dictionary:
+            program += dictionary[char]
 
-int main(){
-       char *tape = malloc(sizeof(char)*20000);
-       char *ptr =  &tape[0];
-"""
-    parsedic = {">": "  ++ptr; \n",
-                "<": "  --ptr; \n",
-                "+": "  ++(*ptr); \n",
-                "-": "  --(*ptr); \n",
-                ".": """    printf("%c \\n",(*ptr)); \n""",
-                ",": """    scanf("%c",ptr); \n""",
-                "[": """  while(*ptr) { \n""",
-                "]": " \n}\n"}
+    program += '\n    return 0;\n}'
 
-    source_code = code_file.read()
-    for data in source_code:
-        if data in parsedic:
-            progam_c = progam_c + parsedic[data]
-    progam_c = progam_c + " return 0; \n} "
-
-    write_program(o, progam_c)
+    write_program(o, program)
 
 
 def write_program(file_out, program_c):
@@ -36,5 +37,5 @@ def write_program(file_out, program_c):
     file_out.flush()
 
 
-if __name__ == "__main__":
-    op = parser()
+# Call parser brainfuck to C
+parser()
