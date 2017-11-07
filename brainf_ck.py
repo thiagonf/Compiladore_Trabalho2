@@ -5,7 +5,7 @@ dictionary = {
     '-': '\ttape[index]--;\n',
     '>': '\t++index;\n',
     '<': '\t--index;\n',
-    '.': '\tprintf("%c\\n", tape[index]);\n',
+    '.': '\tprintf("%c", tape[index]);\n',
     ',': '\ttape[index] = getchar();\ngetchar();\n',
     '[': '\twhile(tape[index]) {\n',
     ']': '\t}\n'
